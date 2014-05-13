@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2600070F191B0F7C0084B4A9 /* GTMOAuth2ViewTouch.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2600070E191B0F7C0084B4A9 /* GTMOAuth2ViewTouch.xib */; };
 		264400F1191343B200407803 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 264400F0191343B200407803 /* Foundation.framework */; };
 		264400F3191343B200407803 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 264400F2191343B200407803 /* CoreGraphics.framework */; };
 		264400F5191343B200407803 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 264400F4191343B200407803 /* UIKit.framework */; };
@@ -22,6 +23,29 @@
 		26440115191343B200407803 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 264400F4191343B200407803 /* UIKit.framework */; };
 		2644011D191343B200407803 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2644011B191343B200407803 /* InfoPlist.strings */; };
 		2644011F191343B200407803 /* Tasks_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2644011E191343B200407803 /* Tasks_Tests.m */; };
+		264401351913443100407803 /* MMDrawerBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 2644012D1913443100407803 /* MMDrawerBarButtonItem.m */; };
+		264401361913443100407803 /* MMDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2644012F1913443100407803 /* MMDrawerController.m */; };
+		264401371913443100407803 /* MMDrawerVisualState.m in Sources */ = {isa = PBXBuildFile; fileRef = 264401321913443100407803 /* MMDrawerVisualState.m */; };
+		264401381913443100407803 /* UIViewController+MMDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 264401341913443100407803 /* UIViewController+MMDrawerController.m */; };
+		2644013C19134BEA00407803 /* MDMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2644013B19134BEA00407803 /* MDMenuViewController.m */; };
+		2644013F19134C0200407803 /* MDTasksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2644013E19134C0200407803 /* MDTasksViewController.m */; };
+		26440142191350EE00407803 /* MDTaskList.m in Sources */ = {isa = PBXBuildFile; fileRef = 26440141191350EE00407803 /* MDTaskList.m */; };
+		264401451913513600407803 /* MDTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 264401441913513600407803 /* MDTask.m */; };
+		269DC2B01921A1E400E49058 /* MDTasksManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 269DC2AF1921A1E400E49058 /* MDTasksManager.m */; };
+		26D5BF981914AD6300E4A81E /* GTLQueryTasks.m in Sources */ = {isa = PBXBuildFile; fileRef = 26D5BF891914AD6300E4A81E /* GTLQueryTasks.m */; };
+		26D5BF991914AD6300E4A81E /* GTLServiceTasks.m in Sources */ = {isa = PBXBuildFile; fileRef = 26D5BF8B1914AD6300E4A81E /* GTLServiceTasks.m */; };
+		26D5BF9B1914AD6300E4A81E /* GTLTasksConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 26D5BF8F1914AD6300E4A81E /* GTLTasksConstants.m */; };
+		26D5BF9C1914AD6300E4A81E /* GTLTasksTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 26D5BF911914AD6300E4A81E /* GTLTasksTask.m */; };
+		26D5BF9D1914AD6300E4A81E /* GTLTasksTaskList.m in Sources */ = {isa = PBXBuildFile; fileRef = 26D5BF931914AD6300E4A81E /* GTLTasksTaskList.m */; };
+		26D5BF9E1914AD6300E4A81E /* GTLTasksTaskLists.m in Sources */ = {isa = PBXBuildFile; fileRef = 26D5BF951914AD6300E4A81E /* GTLTasksTaskLists.m */; };
+		26D5BF9F1914AD6300E4A81E /* GTLTasksTasks.m in Sources */ = {isa = PBXBuildFile; fileRef = 26D5BF971914AD6300E4A81E /* GTLTasksTasks.m */; };
+		26D5BFA11914ADCC00E4A81E /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26D5BFA01914ADCC00E4A81E /* Security.framework */; };
+		26D5BFA31914AE5000E4A81E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26D5BFA21914AE5000E4A81E /* SystemConfiguration.framework */; };
+		26D5C09D1914B63C00E4A81E /* libGTLTouchStaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 26D5BF781914A9DE00E4A81E /* libGTLTouchStaticLib.a */; };
+		26DE179B191C7EB400506977 /* MDEditTaskListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26DE179A191C7EB400506977 /* MDEditTaskListViewController.m */; };
+		26DE17A0191C914F00506977 /* TestView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26DE179F191C914F00506977 /* TestView.xib */; };
+		26DE17A4191C953800506977 /* MDTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 26DE17A3191C953800506977 /* MDTextFieldCell.m */; };
+		26DE17A7191DD38000506977 /* MDFormCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 26DE17A6191DD38000506977 /* MDFormCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,9 +56,45 @@
 			remoteGlobalIDString = 264400EC191343B200407803;
 			remoteInfo = "Tasks+";
 		};
+		26D5BF751914A9DE00E4A81E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 26D5BF6E1914A9DE00E4A81E /* GTL.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4F38F6A60B66E91D00B24B81;
+			remoteInfo = GTLFramework;
+		};
+		26D5BF771914A9DE00E4A81E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 26D5BF6E1914A9DE00E4A81E /* GTL.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4F12027C11A4CA2F00BEB470;
+			remoteInfo = GTLTouchStaticLib;
+		};
+		26D5BF791914A9DE00E4A81E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 26D5BF6E1914A9DE00E4A81E /* GTL.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4F12027D11A4CA2F00BEB470;
+			remoteInfo = GTLUnitTests;
+		};
+		26D5BF7B1914A9DE00E4A81E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 26D5BF6E1914A9DE00E4A81E /* GTL.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4F1AD9020B71603F00DC0485;
+			remoteInfo = DevelopmentTestTool;
+		};
+		26D5C09B1914B4D600E4A81E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 26D5BF6E1914A9DE00E4A81E /* GTL.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 4F1C6E0E1027B3CE00B46459;
+			remoteInfo = GTLTouchStaticLib;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2600070E191B0F7C0084B4A9 /* GTMOAuth2ViewTouch.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GTMOAuth2ViewTouch.xib; sourceTree = "<group>"; };
 		264400ED191343B200407803 /* Tasks+.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Tasks+.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		264400F0191343B200407803 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		264400F2191343B200407803 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -46,16 +106,89 @@
 		264400FF191343B200407803 /* MDAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MDAppDelegate.h; sourceTree = "<group>"; };
 		26440100191343B200407803 /* MDAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MDAppDelegate.m; sourceTree = "<group>"; };
 		26440103191343B200407803 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		26440105191343B200407803 /* MDMasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MDMasterViewController.h; sourceTree = "<group>"; };
-		26440106191343B200407803 /* MDMasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MDMasterViewController.m; sourceTree = "<group>"; };
-		26440108191343B200407803 /* MDDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MDDetailViewController.h; sourceTree = "<group>"; };
-		26440109191343B200407803 /* MDDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MDDetailViewController.m; sourceTree = "<group>"; };
+		26440105191343B200407803 /* MDMasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MDMasterViewController.h; path = "Tasks+/MDMasterViewController.h"; sourceTree = "<group>"; };
+		26440106191343B200407803 /* MDMasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MDMasterViewController.m; path = "Tasks+/MDMasterViewController.m"; sourceTree = "<group>"; };
+		26440108191343B200407803 /* MDDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MDDetailViewController.h; path = "Tasks+/MDDetailViewController.h"; sourceTree = "<group>"; };
+		26440109191343B200407803 /* MDDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MDDetailViewController.m; path = "Tasks+/MDDetailViewController.m"; sourceTree = "<group>"; };
 		2644010B191343B200407803 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		26440111191343B200407803 /* Tasks+Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tasks+Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		26440112191343B200407803 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		2644011A191343B200407803 /* Tasks+Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Tasks+Tests-Info.plist"; sourceTree = "<group>"; };
 		2644011C191343B200407803 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		2644011E191343B200407803 /* Tasks_Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Tasks_Tests.m; sourceTree = "<group>"; };
+		2644012C1913443100407803 /* MMDrawerBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMDrawerBarButtonItem.h; sourceTree = "<group>"; };
+		2644012D1913443100407803 /* MMDrawerBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMDrawerBarButtonItem.m; sourceTree = "<group>"; };
+		2644012E1913443100407803 /* MMDrawerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMDrawerController.h; sourceTree = "<group>"; };
+		2644012F1913443100407803 /* MMDrawerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMDrawerController.m; sourceTree = "<group>"; };
+		264401301913443100407803 /* MMDrawerController+Subclass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MMDrawerController+Subclass.h"; sourceTree = "<group>"; };
+		264401311913443100407803 /* MMDrawerVisualState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMDrawerVisualState.h; sourceTree = "<group>"; };
+		264401321913443100407803 /* MMDrawerVisualState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMDrawerVisualState.m; sourceTree = "<group>"; };
+		264401331913443100407803 /* UIViewController+MMDrawerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+MMDrawerController.h"; sourceTree = "<group>"; };
+		264401341913443100407803 /* UIViewController+MMDrawerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+MMDrawerController.m"; sourceTree = "<group>"; };
+		2644013A19134BEA00407803 /* MDMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDMenuViewController.h; sourceTree = "<group>"; };
+		2644013B19134BEA00407803 /* MDMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDMenuViewController.m; sourceTree = "<group>"; };
+		2644013D19134C0200407803 /* MDTasksViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDTasksViewController.h; sourceTree = "<group>"; };
+		2644013E19134C0200407803 /* MDTasksViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDTasksViewController.m; sourceTree = "<group>"; };
+		26440140191350EE00407803 /* MDTaskList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDTaskList.h; sourceTree = "<group>"; };
+		26440141191350EE00407803 /* MDTaskList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDTaskList.m; sourceTree = "<group>"; };
+		264401431913513600407803 /* MDTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDTask.h; sourceTree = "<group>"; };
+		264401441913513600407803 /* MDTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDTask.m; sourceTree = "<group>"; };
+		269DC2AE1921A1E400E49058 /* MDTasksManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDTasksManager.h; sourceTree = "<group>"; };
+		269DC2AF1921A1E400E49058 /* MDTasksManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDTasksManager.m; sourceTree = "<group>"; };
+		26D3D8481914BCEA00105FE7 /* TasksSampleWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TasksSampleWindowController.h; sourceTree = "<group>"; };
+		26D3D8491914BCEA00105FE7 /* TasksSampleWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TasksSampleWindowController.m; sourceTree = "<group>"; };
+		26D5BF6E1914A9DE00E4A81E /* GTL.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GTL.xcodeproj; path = "../../google-api-objectivec-client-read-only/Source/GTL.xcodeproj"; sourceTree = "<group>"; };
+		26D5BF881914AD6300E4A81E /* GTLQueryTasks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTLQueryTasks.h; sourceTree = "<group>"; };
+		26D5BF891914AD6300E4A81E /* GTLQueryTasks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTLQueryTasks.m; sourceTree = "<group>"; };
+		26D5BF8A1914AD6300E4A81E /* GTLServiceTasks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTLServiceTasks.h; sourceTree = "<group>"; };
+		26D5BF8B1914AD6300E4A81E /* GTLServiceTasks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTLServiceTasks.m; sourceTree = "<group>"; };
+		26D5BF8C1914AD6300E4A81E /* GTLTasks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTLTasks.h; sourceTree = "<group>"; };
+		26D5BF8E1914AD6300E4A81E /* GTLTasksConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTLTasksConstants.h; sourceTree = "<group>"; };
+		26D5BF8F1914AD6300E4A81E /* GTLTasksConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTLTasksConstants.m; sourceTree = "<group>"; };
+		26D5BF901914AD6300E4A81E /* GTLTasksTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTLTasksTask.h; sourceTree = "<group>"; };
+		26D5BF911914AD6300E4A81E /* GTLTasksTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTLTasksTask.m; sourceTree = "<group>"; };
+		26D5BF921914AD6300E4A81E /* GTLTasksTaskList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTLTasksTaskList.h; sourceTree = "<group>"; };
+		26D5BF931914AD6300E4A81E /* GTLTasksTaskList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTLTasksTaskList.m; sourceTree = "<group>"; };
+		26D5BF941914AD6300E4A81E /* GTLTasksTaskLists.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTLTasksTaskLists.h; sourceTree = "<group>"; };
+		26D5BF951914AD6300E4A81E /* GTLTasksTaskLists.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTLTasksTaskLists.m; sourceTree = "<group>"; };
+		26D5BF961914AD6300E4A81E /* GTLTasksTasks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTLTasksTasks.h; sourceTree = "<group>"; };
+		26D5BF971914AD6300E4A81E /* GTLTasksTasks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTLTasksTasks.m; sourceTree = "<group>"; };
+		26D5BFA01914ADCC00E4A81E /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		26D5BFA21914AE5000E4A81E /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		26D5C0A01914B7A600E4A81E /* GTLBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTLBase64.h; sourceTree = "<group>"; };
+		26D5C0A11914B7A600E4A81E /* GTLBatchQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTLBatchQuery.h; sourceTree = "<group>"; };
+		26D5C0A21914B7A600E4A81E /* GTLBatchResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTLBatchResult.h; sourceTree = "<group>"; };
+		26D5C0A31914B7A600E4A81E /* GTLDateTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTLDateTime.h; sourceTree = "<group>"; };
+		26D5C0A41914B7A600E4A81E /* GTLDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTLDefines.h; sourceTree = "<group>"; };
+		26D5C0A51914B7A600E4A81E /* GTLErrorObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTLErrorObject.h; sourceTree = "<group>"; };
+		26D5C0A61914B7A600E4A81E /* GTLFramework.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTLFramework.h; sourceTree = "<group>"; };
+		26D5C0A71914B7A600E4A81E /* GTLJSONParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTLJSONParser.h; sourceTree = "<group>"; };
+		26D5C0A81914B7A600E4A81E /* GTLObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTLObject.h; sourceTree = "<group>"; };
+		26D5C0A91914B7A600E4A81E /* GTLQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTLQuery.h; sourceTree = "<group>"; };
+		26D5C0AA1914B7A600E4A81E /* GTLRuntimeCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTLRuntimeCommon.h; sourceTree = "<group>"; };
+		26D5C0AB1914B7A600E4A81E /* GTLService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTLService.h; sourceTree = "<group>"; };
+		26D5C0AC1914B7A600E4A81E /* GTLTargetNamespace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTLTargetNamespace.h; sourceTree = "<group>"; };
+		26D5C0AD1914B7A600E4A81E /* GTLUploadParameters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTLUploadParameters.h; sourceTree = "<group>"; };
+		26D5C0AE1914B7A600E4A81E /* GTLUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTLUtilities.h; sourceTree = "<group>"; };
+		26D5C0AF1914B7A600E4A81E /* GTMGatherInputStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMGatherInputStream.h; sourceTree = "<group>"; };
+		26D5C0B01914B7A600E4A81E /* GTMHTTPFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMHTTPFetcher.h; sourceTree = "<group>"; };
+		26D5C0B11914B7A600E4A81E /* GTMHTTPFetcherLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMHTTPFetcherLogging.h; sourceTree = "<group>"; };
+		26D5C0B21914B7A600E4A81E /* GTMHTTPFetcherService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMHTTPFetcherService.h; sourceTree = "<group>"; };
+		26D5C0B31914B7A600E4A81E /* GTMHTTPFetchHistory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMHTTPFetchHistory.h; sourceTree = "<group>"; };
+		26D5C0B41914B7A600E4A81E /* GTMHTTPUploadFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMHTTPUploadFetcher.h; sourceTree = "<group>"; };
+		26D5C0B51914B7A600E4A81E /* GTMMIMEDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMMIMEDocument.h; sourceTree = "<group>"; };
+		26D5C0B61914B7A600E4A81E /* GTMOAuth2Authentication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMOAuth2Authentication.h; sourceTree = "<group>"; };
+		26D5C0B71914B7A600E4A81E /* GTMOAuth2SignIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMOAuth2SignIn.h; sourceTree = "<group>"; };
+		26D5C0B81914B7A600E4A81E /* GTMOAuth2ViewControllerTouch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMOAuth2ViewControllerTouch.h; sourceTree = "<group>"; };
+		26D5C0B91914B7A600E4A81E /* GTMOAuth2WindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMOAuth2WindowController.h; sourceTree = "<group>"; };
+		26D5C0BA1914B7A600E4A81E /* GTMReadMonitorInputStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMReadMonitorInputStream.h; sourceTree = "<group>"; };
+		26DE1799191C7EB400506977 /* MDEditTaskListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDEditTaskListViewController.h; sourceTree = "<group>"; };
+		26DE179A191C7EB400506977 /* MDEditTaskListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDEditTaskListViewController.m; sourceTree = "<group>"; };
+		26DE179F191C914F00506977 /* TestView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TestView.xib; sourceTree = "<group>"; };
+		26DE17A2191C953800506977 /* MDTextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDTextFieldCell.h; sourceTree = "<group>"; };
+		26DE17A3191C953800506977 /* MDTextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDTextFieldCell.m; sourceTree = "<group>"; };
+		26DE17A5191DD38000506977 /* MDFormCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDFormCell.h; sourceTree = "<group>"; };
+		26DE17A6191DD38000506977 /* MDFormCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDFormCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +196,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				26D5C09D1914B63C00E4A81E /* libGTLTouchStaticLib.a in Frameworks */,
+				26D5BFA31914AE5000E4A81E /* SystemConfiguration.framework in Frameworks */,
+				26D5BFA11914ADCC00E4A81E /* Security.framework in Frameworks */,
 				264400F3191343B200407803 /* CoreGraphics.framework in Frameworks */,
 				264400F5191343B200407803 /* UIKit.framework in Frameworks */,
 				264400F1191343B200407803 /* Foundation.framework in Frameworks */,
@@ -89,6 +225,12 @@
 				26440118191343B200407803 /* Tasks+Tests */,
 				264400EF191343B200407803 /* Frameworks */,
 				264400EE191343B200407803 /* Products */,
+				26D3D8481914BCEA00105FE7 /* TasksSampleWindowController.h */,
+				26D3D8491914BCEA00105FE7 /* TasksSampleWindowController.m */,
+				26440105191343B200407803 /* MDMasterViewController.h */,
+				26440106191343B200407803 /* MDMasterViewController.m */,
+				26440108191343B200407803 /* MDDetailViewController.h */,
+				26440109191343B200407803 /* MDDetailViewController.m */,
 			);
 			sourceTree = "<group>";
 		};
@@ -104,6 +246,9 @@
 		264400EF191343B200407803 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				26D5BF6E1914A9DE00E4A81E /* GTL.xcodeproj */,
+				26D5BFA21914AE5000E4A81E /* SystemConfiguration.framework */,
+				26D5BFA01914ADCC00E4A81E /* Security.framework */,
 				264400F0191343B200407803 /* Foundation.framework */,
 				264400F2191343B200407803 /* CoreGraphics.framework */,
 				264400F4191343B200407803 /* UIKit.framework */,
@@ -115,14 +260,16 @@
 		264400F6191343B200407803 /* Tasks+ */ = {
 			isa = PBXGroup;
 			children = (
+				269DC2AD1921A18300E49058 /* Util */,
+				26DE17A1191C941C00506977 /* XIB */,
+				26D5BF851914AD4A00E4A81E /* Libraries */,
+				264401391913445C00407803 /* Assets */,
+				2644012B1913440200407803 /* Models */,
+				2644012A191343FB00407803 /* Views */,
+				26440129191343F000407803 /* DrawerController */,
+				26440128191343D600407803 /* ViewControllers */,
 				264400FF191343B200407803 /* MDAppDelegate.h */,
 				26440100191343B200407803 /* MDAppDelegate.m */,
-				26440102191343B200407803 /* Main.storyboard */,
-				26440105191343B200407803 /* MDMasterViewController.h */,
-				26440106191343B200407803 /* MDMasterViewController.m */,
-				26440108191343B200407803 /* MDDetailViewController.h */,
-				26440109191343B200407803 /* MDDetailViewController.m */,
-				2644010B191343B200407803 /* Images.xcassets */,
 				264400F7191343B200407803 /* Supporting Files */,
 			);
 			path = "Tasks+";
@@ -157,6 +304,168 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		26440128191343D600407803 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				2644013A19134BEA00407803 /* MDMenuViewController.h */,
+				2644013B19134BEA00407803 /* MDMenuViewController.m */,
+				2644013D19134C0200407803 /* MDTasksViewController.h */,
+				2644013E19134C0200407803 /* MDTasksViewController.m */,
+				26DE1799191C7EB400506977 /* MDEditTaskListViewController.h */,
+				26DE179A191C7EB400506977 /* MDEditTaskListViewController.m */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		26440129191343F000407803 /* DrawerController */ = {
+			isa = PBXGroup;
+			children = (
+				2644012C1913443100407803 /* MMDrawerBarButtonItem.h */,
+				2644012D1913443100407803 /* MMDrawerBarButtonItem.m */,
+				2644012E1913443100407803 /* MMDrawerController.h */,
+				2644012F1913443100407803 /* MMDrawerController.m */,
+				264401301913443100407803 /* MMDrawerController+Subclass.h */,
+				264401311913443100407803 /* MMDrawerVisualState.h */,
+				264401321913443100407803 /* MMDrawerVisualState.m */,
+				264401331913443100407803 /* UIViewController+MMDrawerController.h */,
+				264401341913443100407803 /* UIViewController+MMDrawerController.m */,
+			);
+			name = DrawerController;
+			sourceTree = "<group>";
+		};
+		2644012A191343FB00407803 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				26DE17A2191C953800506977 /* MDTextFieldCell.h */,
+				26DE17A3191C953800506977 /* MDTextFieldCell.m */,
+				26DE17A5191DD38000506977 /* MDFormCell.h */,
+				26DE17A6191DD38000506977 /* MDFormCell.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		2644012B1913440200407803 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				26440140191350EE00407803 /* MDTaskList.h */,
+				26440141191350EE00407803 /* MDTaskList.m */,
+				264401431913513600407803 /* MDTask.h */,
+				264401441913513600407803 /* MDTask.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		264401391913445C00407803 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				2644010B191343B200407803 /* Images.xcassets */,
+			);
+			name = Assets;
+			sourceTree = "<group>";
+		};
+		269DC2AD1921A18300E49058 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				269DC2AE1921A1E400E49058 /* MDTasksManager.h */,
+				269DC2AF1921A1E400E49058 /* MDTasksManager.m */,
+			);
+			name = Util;
+			sourceTree = "<group>";
+		};
+		26D5BF6F1914A9DE00E4A81E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				26D5BF761914A9DE00E4A81E /* GTL.framework */,
+				26D5BF781914A9DE00E4A81E /* libGTLTouchStaticLib.a */,
+				26D5BF7A1914A9DE00E4A81E /* GTLUnitTests.octest */,
+				26D5BF7C1914A9DE00E4A81E /* DevelopmentTestTool */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		26D5BF851914AD4A00E4A81E /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				26D5C09F1914B7A600E4A81E /* Headers */,
+				26D5BF861914AD6300E4A81E /* Tasks */,
+			);
+			name = Libraries;
+			sourceTree = "<group>";
+		};
+		26D5BF861914AD6300E4A81E /* Tasks */ = {
+			isa = PBXGroup;
+			children = (
+				26D5BF871914AD6300E4A81E /* Generated */,
+			);
+			path = Tasks;
+			sourceTree = "<group>";
+		};
+		26D5BF871914AD6300E4A81E /* Generated */ = {
+			isa = PBXGroup;
+			children = (
+				26D5BF881914AD6300E4A81E /* GTLQueryTasks.h */,
+				26D5BF891914AD6300E4A81E /* GTLQueryTasks.m */,
+				26D5BF8A1914AD6300E4A81E /* GTLServiceTasks.h */,
+				26D5BF8B1914AD6300E4A81E /* GTLServiceTasks.m */,
+				26D5BF8C1914AD6300E4A81E /* GTLTasks.h */,
+				26D5BF8E1914AD6300E4A81E /* GTLTasksConstants.h */,
+				26D5BF8F1914AD6300E4A81E /* GTLTasksConstants.m */,
+				26D5BF901914AD6300E4A81E /* GTLTasksTask.h */,
+				26D5BF911914AD6300E4A81E /* GTLTasksTask.m */,
+				26D5BF921914AD6300E4A81E /* GTLTasksTaskList.h */,
+				26D5BF931914AD6300E4A81E /* GTLTasksTaskList.m */,
+				26D5BF941914AD6300E4A81E /* GTLTasksTaskLists.h */,
+				26D5BF951914AD6300E4A81E /* GTLTasksTaskLists.m */,
+				26D5BF961914AD6300E4A81E /* GTLTasksTasks.h */,
+				26D5BF971914AD6300E4A81E /* GTLTasksTasks.m */,
+			);
+			path = Generated;
+			sourceTree = "<group>";
+		};
+		26D5C09F1914B7A600E4A81E /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				26D5C0A01914B7A600E4A81E /* GTLBase64.h */,
+				26D5C0A11914B7A600E4A81E /* GTLBatchQuery.h */,
+				26D5C0A21914B7A600E4A81E /* GTLBatchResult.h */,
+				26D5C0A31914B7A600E4A81E /* GTLDateTime.h */,
+				26D5C0A41914B7A600E4A81E /* GTLDefines.h */,
+				26D5C0A51914B7A600E4A81E /* GTLErrorObject.h */,
+				26D5C0A61914B7A600E4A81E /* GTLFramework.h */,
+				26D5C0A71914B7A600E4A81E /* GTLJSONParser.h */,
+				26D5C0A81914B7A600E4A81E /* GTLObject.h */,
+				26D5C0A91914B7A600E4A81E /* GTLQuery.h */,
+				26D5C0AA1914B7A600E4A81E /* GTLRuntimeCommon.h */,
+				26D5C0AB1914B7A600E4A81E /* GTLService.h */,
+				26D5C0AC1914B7A600E4A81E /* GTLTargetNamespace.h */,
+				26D5C0AD1914B7A600E4A81E /* GTLUploadParameters.h */,
+				26D5C0AE1914B7A600E4A81E /* GTLUtilities.h */,
+				26D5C0AF1914B7A600E4A81E /* GTMGatherInputStream.h */,
+				26D5C0B01914B7A600E4A81E /* GTMHTTPFetcher.h */,
+				26D5C0B11914B7A600E4A81E /* GTMHTTPFetcherLogging.h */,
+				26D5C0B21914B7A600E4A81E /* GTMHTTPFetcherService.h */,
+				26D5C0B31914B7A600E4A81E /* GTMHTTPFetchHistory.h */,
+				26D5C0B41914B7A600E4A81E /* GTMHTTPUploadFetcher.h */,
+				26D5C0B51914B7A600E4A81E /* GTMMIMEDocument.h */,
+				26D5C0B61914B7A600E4A81E /* GTMOAuth2Authentication.h */,
+				26D5C0B71914B7A600E4A81E /* GTMOAuth2SignIn.h */,
+				26D5C0B81914B7A600E4A81E /* GTMOAuth2ViewControllerTouch.h */,
+				26D5C0B91914B7A600E4A81E /* GTMOAuth2WindowController.h */,
+				26D5C0BA1914B7A600E4A81E /* GTMReadMonitorInputStream.h */,
+			);
+			path = Headers;
+			sourceTree = "<group>";
+		};
+		26DE17A1191C941C00506977 /* XIB */ = {
+			isa = PBXGroup;
+			children = (
+				2600070E191B0F7C0084B4A9 /* GTMOAuth2ViewTouch.xib */,
+				26440102191343B200407803 /* Main.storyboard */,
+				26DE179F191C914F00506977 /* TestView.xib */,
+			);
+			name = XIB;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -171,6 +480,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				26D5C09C1914B4D600E4A81E /* PBXTargetDependency */,
 			);
 			name = "Tasks+";
 			productName = "Tasks+";
@@ -205,6 +515,9 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Mikael Dunhem";
 				TargetAttributes = {
+					264400EC191343B200407803 = {
+						DevelopmentTeam = F43T467263;
+					};
 					26440110191343B200407803 = {
 						TestTargetID = 264400EC191343B200407803;
 					};
@@ -221,6 +534,12 @@
 			mainGroup = 264400E4191343B200407803;
 			productRefGroup = 264400EE191343B200407803 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 26D5BF6F1914A9DE00E4A81E /* Products */;
+					ProjectRef = 26D5BF6E1914A9DE00E4A81E /* GTL.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				264400EC191343B200407803 /* Tasks+ */,
@@ -229,13 +548,46 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXReferenceProxy section */
+		26D5BF761914A9DE00E4A81E /* GTL.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = GTL.framework;
+			remoteRef = 26D5BF751914A9DE00E4A81E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		26D5BF781914A9DE00E4A81E /* libGTLTouchStaticLib.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libGTLTouchStaticLib.a;
+			remoteRef = 26D5BF771914A9DE00E4A81E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		26D5BF7A1914A9DE00E4A81E /* GTLUnitTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = GTLUnitTests.octest;
+			remoteRef = 26D5BF791914A9DE00E4A81E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		26D5BF7C1914A9DE00E4A81E /* DevelopmentTestTool */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = DevelopmentTestTool;
+			remoteRef = 26D5BF7B1914A9DE00E4A81E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
 /* Begin PBXResourcesBuildPhase section */
 		264400EB191343B200407803 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2600070F191B0F7C0084B4A9 /* GTMOAuth2ViewTouch.xib in Resources */,
 				2644010C191343B200407803 /* Images.xcassets in Resources */,
 				264400FB191343B200407803 /* InfoPlist.strings in Resources */,
+				26DE17A0191C914F00506977 /* TestView.xib in Resources */,
 				26440104191343B200407803 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -255,10 +607,29 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2644013F19134C0200407803 /* MDTasksViewController.m in Sources */,
+				26D5BF9C1914AD6300E4A81E /* GTLTasksTask.m in Sources */,
+				2644013C19134BEA00407803 /* MDMenuViewController.m in Sources */,
+				26D5BF981914AD6300E4A81E /* GTLQueryTasks.m in Sources */,
 				264400FD191343B200407803 /* main.m in Sources */,
+				26D5BF9F1914AD6300E4A81E /* GTLTasksTasks.m in Sources */,
+				26D5BF9E1914AD6300E4A81E /* GTLTasksTaskLists.m in Sources */,
 				26440107191343B200407803 /* MDMasterViewController.m in Sources */,
+				26440142191350EE00407803 /* MDTaskList.m in Sources */,
+				26D5BF991914AD6300E4A81E /* GTLServiceTasks.m in Sources */,
+				26D5BF9B1914AD6300E4A81E /* GTLTasksConstants.m in Sources */,
+				264401351913443100407803 /* MMDrawerBarButtonItem.m in Sources */,
+				26DE179B191C7EB400506977 /* MDEditTaskListViewController.m in Sources */,
+				26DE17A4191C953800506977 /* MDTextFieldCell.m in Sources */,
+				26D5BF9D1914AD6300E4A81E /* GTLTasksTaskList.m in Sources */,
+				264401381913443100407803 /* UIViewController+MMDrawerController.m in Sources */,
+				264401451913513600407803 /* MDTask.m in Sources */,
 				2644010A191343B200407803 /* MDDetailViewController.m in Sources */,
+				264401361913443100407803 /* MMDrawerController.m in Sources */,
 				26440101191343B200407803 /* MDAppDelegate.m in Sources */,
+				269DC2B01921A1E400E49058 /* MDTasksManager.m in Sources */,
+				26DE17A7191DD38000506977 /* MDFormCell.m in Sources */,
+				264401371913443100407803 /* MMDrawerVisualState.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -277,6 +648,11 @@
 			isa = PBXTargetDependency;
 			target = 264400EC191343B200407803 /* Tasks+ */;
 			targetProxy = 26440116191343B200407803 /* PBXContainerItemProxy */;
+		};
+		26D5C09C1914B4D600E4A81E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = GTLTouchStaticLib;
+			targetProxy = 26D5C09B1914B4D600E4A81E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -383,9 +759,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Tasks+/Tasks+-Prefix.pch";
 				INFOPLIST_FILE = "Tasks+/Tasks+-Info.plist";
+				"OTHER_LDFLAGS[arch=*]" = (
+					"-ObjC",
+					"-all_load",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -396,9 +777,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Tasks+/Tasks+-Prefix.pch";
 				INFOPLIST_FILE = "Tasks+/Tasks+-Info.plist";
+				"OTHER_LDFLAGS[arch=*]" = (
+					"-ObjC",
+					"-all_load",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -463,6 +849,7 @@
 				26440124191343B200407803 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		26440125191343B200407803 /* Build configuration list for PBXNativeTarget "Tasks+Tests" */ = {
 			isa = XCConfigurationList;
@@ -471,6 +858,7 @@
 				26440127191343B200407803 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

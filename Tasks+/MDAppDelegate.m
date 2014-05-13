@@ -7,12 +7,30 @@
 //
 
 #import "MDAppDelegate.h"
+#import "MMDrawerController.h"
+#import "MDMenuViewController.h"
+#import "MDTasksViewController.h"
 
 @implementation MDAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window.backgroundColor = [UIColor whiteColor];
+    self.window.tintColor = [UIColor blueColor];
+    
+    MDMenuViewController *menuViewController = [[MDMenuViewController alloc] initWithStyle:UITableViewStylePlain];
+    UINavigationController *menuNavController = [[UINavigationController alloc] initWithRootViewController:menuViewController];
+    
+    MMDrawerController *drawerController = [[MMDrawerController alloc] initWithCenterViewController:[menuViewController getTasksViewController] leftDrawerViewController:menuNavController];
+    
+    [drawerController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeAll];
+    [drawerController setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeAll];
+    
+    self.window.rootViewController = drawerController;
+    
+    [self.window makeKeyAndVisible];
+    
     return YES;
 }
 							

@@ -10,6 +10,8 @@
 
 #import "MDDetailViewController.h"
 
+#import "UIViewController+MMDrawerController.h"
+
 @interface MDMasterViewController () {
     NSMutableArray *_objects;
 }
@@ -83,6 +85,14 @@
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
     }
+}
+
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSDate *object = _objects[indexPath.row];
+    MDDetailViewController *detailViewController = [[MDDetailViewController alloc] initWithNibName:nil bundle:nil];
+    [detailViewController setDetailItem:object];
+    
+    [self.drawerController setCenterViewController:detailViewController withFullCloseAnimation:YES completion:nil];
 }
 
 /*
