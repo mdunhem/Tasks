@@ -25,6 +25,8 @@ static NSString * const kTaskListCellReuseIdentifier = @"TaskListCellReuseIdenti
 @property (nonatomic, strong) MDTasksViewController *tasksViewController;
 @property BOOL isAuthorized;
 
+@property (nonatomic, strong) MDTasksManager *manager;
+
 @property (nonatomic) GTLServiceTasks *tasksService;
 @property (nonatomic) GTLTasksTaskLists *taskLists;
 @property (nonatomic) GTLTasksTasks *tasks;
@@ -54,6 +56,14 @@ static NSString * const kTaskListCellReuseIdentifier = @"TaskListCellReuseIdenti
         self.title = @"Task Lists";
     }
     return self;
+}
+
+- (MDTasksManager *)manager {
+    if (!_manager) {
+        _manager = [[MDTasksManager alloc] init];
+        _manager.delegate = self;
+    }
+    return _manager;
 }
 
 - (MDTasksViewController *)tasksViewController {
@@ -89,6 +99,13 @@ static NSString * const kTaskListCellReuseIdentifier = @"TaskListCellReuseIdenti
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     self.tableView.allowsSelectionDuringEditing = YES;
+    
+//    NSError *error;
+//    if (![[self manager] fetchTaskLists:error]) {
+//        // Update to handle the error appropriately.
+//        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+//        exit(-1);  // Fail
+//    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -103,7 +120,9 @@ static NSString * const kTaskListCellReuseIdentifier = @"TaskListCellReuseIdenti
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.taskLists.items.count;
+//    return self.taskLists.items.count;
+    NSInteger count = [_manager numberOfTaskLists];
+    return count;
 }
 
 
@@ -114,7 +133,7 @@ static NSString * const kTaskListCellReuseIdentifier = @"TaskListCellReuseIdenti
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kTaskListCellReuseIdentifier];
     }
     
-    GTLTasksTaskList *list = [self.taskLists itemAtIndex:indexPath.row];
+    GTLTasksTaskList *list = [_manager taskListAtIndex:indexPath.row]; //[self.taskLists itemAtIndex:indexPath.row];
     
     cell.textLabel.text = list.title;
     
@@ -208,8 +227,11 @@ static NSString * const kTaskListCellReuseIdentifier = @"TaskListCellReuseIdenti
 
 - (void)isAuthorizedWithAuthentication:(GTMOAuth2Authentication *)auth {
     self.isAuthorized = YES;
+    [self.manager setAuth:auth];
     self.tasksService.authorizer = auth;
-    [self fetchTaskLists];
+    NSError *error = nil;
+    [self.manager fetchTaskLists:error];
+//    [self fetchTaskLists];
 }
 
 - (void)MDEditTaskListViewController:(MDEditTaskListViewController *)addTaskListViewController didEndWithNewTaskListName:(NSString *)taskListName {
@@ -335,6 +357,16 @@ static NSString * const kTaskListCellReuseIdentifier = @"TaskListCellReuseIdenti
             NSLog(@"Error: %@", error);
         }
     }];
+}
+
+#pragma mark - MDTaskManagerDelegate Protocol Methods
+
+- (void)managerWillChangeContent:(MDTasksManager *)manager {
+    
+}
+
+- (void)managerDidChangeContent:(MDTasksManager *)manager {
+    [self.tableView reloadData];
 }
 
 @end

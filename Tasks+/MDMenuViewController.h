@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MDTasksManager.h"
 #import "MDTasksViewController.h"
 #import "MDEditTaskListViewController.h"
 
-@interface MDMenuViewController : UITableViewController <MDEditTaskListViewControllerDelegate>
+@interface MDMenuViewController : UITableViewController <MDEditTaskListViewControllerDelegate, MDTasksManagerDelegate>
 
 - (UIViewController *)getTasksViewController;
 

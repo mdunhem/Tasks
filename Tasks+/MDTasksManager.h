@@ -9,13 +9,19 @@
 #import <Foundation/Foundation.h>
 
 #import "GTLTasks.h"
+#import "GTMOAuth2ViewControllerTouch.h"
 
 @protocol MDTasksManagerDelegate;
 
 @interface MDTasksManager : NSObject
 
 @property (nonatomic, assign) id <MDTasksManagerDelegate> delegate;
+@property (nonatomic, assign) GTMOAuth2Authentication *auth;
 @property (nonatomic, readonly) GTLServiceTicket *ticket;
+
+@property (readonly) NSError *fetchError;
+
+- (instancetype)initWithAuth:(GTMOAuth2Authentication *)auth;
 
 // Fetching
 - (BOOL)fetchTaskLists:(NSError *)error;

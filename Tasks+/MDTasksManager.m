@@ -11,6 +11,7 @@
 @interface MDTasksManager ()
 
 @property (nonatomic, strong) GTLTasksTaskLists *taskLists;
+@property (nonatomic, strong) NSMutableDictionary *taskListsDict;
 @property (nonatomic, strong) GTLTasksTasks *tasks;
 @property (nonatomic, strong) GTLServiceTasks *service;
 
@@ -22,6 +23,15 @@
 @implementation MDTasksManager
 
 @synthesize ticket = _ticket;
+
+- (instancetype)initWithAuth:(GTMOAuth2Authentication *)auth {
+    self = [super init];
+    if (self) {
+        [self.service setAuthorizer:auth];
+    }
+    
+    return self;
+}
 
 #pragma mark - Properties
 
@@ -39,6 +49,19 @@
         _service.retryEnabled = YES;
     }
     return _service;
+}
+
+- (void)setAuth:(GTMOAuth2Authentication *)auth {
+    _auth = auth;
+    self.service.authorizer = auth;
+}
+
+- (GTLTasksTaskLists *)taskLists {
+    if (!_taskLists) {
+        _taskLists = [[GTLTasksTaskLists alloc] init];
+        _taskLists.items = [NSArray array];
+    }
+    return _taskLists;
 }
 
 #pragma mark - TableView Methods
@@ -59,6 +82,13 @@
 }
 
 - (void)syncTaskListsWithFetchedTaskList:(GTLTasksTaskList *)fetchedTaskList {
+//    GTLTasksTaskList *currentTaskListInDict = [self.taskListsDict objectForKey:fetchedTaskList.identifier];
+//    if (!currentTaskListInDict) {
+//        [self.taskListsDict setObject:fetchedTaskList forKey:fetchedTaskList.identifier];
+//    } else {
+//        
+//    }
+    
     if (![self.taskLists.items containsObject:fetchedTaskList]) {
         self.taskLists.items = [self.taskLists.items arrayByAddingObject:fetchedTaskList];
     }
@@ -71,6 +101,7 @@
     GTLQueryTasks *query = [GTLQueryTasks queryForTasklistsList];
     _ticket = [self.service executeQuery:query completionHandler:^(GTLServiceTicket *ticket, id taskLists, NSError *fetchError) {
         _ticket = nil;
+        NSLog(@"Failed: %@", fetchError);
         if ([self.delegate respondsToSelector:@selector(managerWillChangeContent:)]) {
             [self.delegate managerWillChangeContent:self];
         }
@@ -83,7 +114,7 @@
     
     error = localError;
     
-    return !error;
+    return YES;
 }
 
 - (BOOL)fetchTasks:(NSError *)error forTaskListAtIndex:(NSUInteger)index {
