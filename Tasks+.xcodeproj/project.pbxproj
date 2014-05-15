@@ -31,6 +31,8 @@
 		2644013F19134C0200407803 /* MDTasksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2644013E19134C0200407803 /* MDTasksViewController.m */; };
 		26440142191350EE00407803 /* MDTaskList.m in Sources */ = {isa = PBXBuildFile; fileRef = 26440141191350EE00407803 /* MDTaskList.m */; };
 		264401451913513600407803 /* MDTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 264401441913513600407803 /* MDTask.m */; };
+		2646E4D419244CEF006E76B4 /* MDTaskListsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2646E4D319244CEF006E76B4 /* MDTaskListsManager.m */; };
+		2646E4DA19244D77006E76B4 /* MDManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2646E4D919244D77006E76B4 /* MDManager.m */; };
 		269DC2B01921A1E400E49058 /* MDTasksManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 269DC2AF1921A1E400E49058 /* MDTasksManager.m */; };
 		26D5BF981914AD6300E4A81E /* GTLQueryTasks.m in Sources */ = {isa = PBXBuildFile; fileRef = 26D5BF891914AD6300E4A81E /* GTLQueryTasks.m */; };
 		26D5BF991914AD6300E4A81E /* GTLServiceTasks.m in Sources */ = {isa = PBXBuildFile; fileRef = 26D5BF8B1914AD6300E4A81E /* GTLServiceTasks.m */; };
@@ -133,6 +135,10 @@
 		26440141191350EE00407803 /* MDTaskList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDTaskList.m; sourceTree = "<group>"; };
 		264401431913513600407803 /* MDTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDTask.h; sourceTree = "<group>"; };
 		264401441913513600407803 /* MDTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDTask.m; sourceTree = "<group>"; };
+		2646E4D219244CEF006E76B4 /* MDTaskListsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDTaskListsManager.h; sourceTree = "<group>"; };
+		2646E4D319244CEF006E76B4 /* MDTaskListsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDTaskListsManager.m; sourceTree = "<group>"; };
+		2646E4D819244D77006E76B4 /* MDManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDManager.h; sourceTree = "<group>"; };
+		2646E4D919244D77006E76B4 /* MDManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDManager.m; sourceTree = "<group>"; };
 		269DC2AE1921A1E400E49058 /* MDTasksManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDTasksManager.h; sourceTree = "<group>"; };
 		269DC2AF1921A1E400E49058 /* MDTasksManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDTasksManager.m; sourceTree = "<group>"; };
 		26D3D8481914BCEA00105FE7 /* TasksSampleWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TasksSampleWindowController.h; sourceTree = "<group>"; };
@@ -368,6 +374,10 @@
 			children = (
 				269DC2AE1921A1E400E49058 /* MDTasksManager.h */,
 				269DC2AF1921A1E400E49058 /* MDTasksManager.m */,
+				2646E4D219244CEF006E76B4 /* MDTaskListsManager.h */,
+				2646E4D319244CEF006E76B4 /* MDTaskListsManager.m */,
+				2646E4D819244D77006E76B4 /* MDManager.h */,
+				2646E4D919244D77006E76B4 /* MDManager.m */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -616,6 +626,7 @@
 				26D5BF9E1914AD6300E4A81E /* GTLTasksTaskLists.m in Sources */,
 				26440107191343B200407803 /* MDMasterViewController.m in Sources */,
 				26440142191350EE00407803 /* MDTaskList.m in Sources */,
+				2646E4DA19244D77006E76B4 /* MDManager.m in Sources */,
 				26D5BF991914AD6300E4A81E /* GTLServiceTasks.m in Sources */,
 				26D5BF9B1914AD6300E4A81E /* GTLTasksConstants.m in Sources */,
 				264401351913443100407803 /* MMDrawerBarButtonItem.m in Sources */,
@@ -628,6 +639,7 @@
 				264401361913443100407803 /* MMDrawerController.m in Sources */,
 				26440101191343B200407803 /* MDAppDelegate.m in Sources */,
 				269DC2B01921A1E400E49058 /* MDTasksManager.m in Sources */,
+				2646E4D419244CEF006E76B4 /* MDTaskListsManager.m in Sources */,
 				26DE17A7191DD38000506977 /* MDFormCell.m in Sources */,
 				264401371913443100407803 /* MMDrawerVisualState.m in Sources */,
 			);

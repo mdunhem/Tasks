@@ -25,7 +25,7 @@ static NSString * const kTaskListCellReuseIdentifier = @"TaskListCellReuseIdenti
 @property (nonatomic, strong) MDTasksViewController *tasksViewController;
 @property BOOL isAuthorized;
 
-@property (nonatomic, strong) MDTasksManager *manager;
+@property (nonatomic, strong) MDTaskListsManager *manager;
 
 @property (nonatomic) GTLServiceTasks *tasksService;
 @property (nonatomic) GTLTasksTaskLists *taskLists;
@@ -58,9 +58,9 @@ static NSString * const kTaskListCellReuseIdentifier = @"TaskListCellReuseIdenti
     return self;
 }
 
-- (MDTasksManager *)manager {
+- (MDTaskListsManager *)manager {
     if (!_manager) {
-        _manager = [[MDTasksManager alloc] init];
+        _manager = [[MDTaskListsManager alloc] init];
         _manager.delegate = self;
     }
     return _manager;
@@ -121,7 +121,7 @@ static NSString * const kTaskListCellReuseIdentifier = @"TaskListCellReuseIdenti
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 //    return self.taskLists.items.count;
-    NSInteger count = [_manager numberOfTaskLists];
+    NSInteger count = [_manager count];
     return count;
 }
 
@@ -158,9 +158,9 @@ static NSString * const kTaskListCellReuseIdentifier = @"TaskListCellReuseIdenti
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        GTLTasksTaskList *list = (GTLTasksTaskList *)[[[self taskLists] items] objectAtIndex:indexPath.row];
-        [self deleteTaskList:list];
-//        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        [_manager deleteTaskList:[_manager taskListAtIndex:indexPath.row]];
+        [tableView setEditing:NO];
+        [self setEditing:NO];
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }   
@@ -229,9 +229,7 @@ static NSString * const kTaskListCellReuseIdentifier = @"TaskListCellReuseIdenti
     self.isAuthorized = YES;
     [self.manager setAuth:auth];
     self.tasksService.authorizer = auth;
-    NSError *error = nil;
-    [self.manager fetchTaskLists:error];
-//    [self fetchTaskLists];
+    [self.manager fetch];
 }
 
 - (void)MDEditTaskListViewController:(MDEditTaskListViewController *)addTaskListViewController didEndWithNewTaskListName:(NSString *)taskListName {
@@ -280,17 +278,18 @@ static NSString * const kTaskListCellReuseIdentifier = @"TaskListCellReuseIdenti
 }
 
 - (void)addTaskList:(GTLTasksTaskList *)taskList {
-    GTLQueryTasks *query = [GTLQueryTasks queryForTasklistsInsertWithObject:taskList];
-    
-    _tasksTicket = [self.tasksService executeQuery:query completionHandler:^(GTLServiceTicket *ticket, id item, NSError *error) {
-        _tasksTicket = nil;
-        
-        if (error == nil) {
-            [self fetchTaskLists];
-        } else {
-            NSLog(@"Error: %@", error);
-        }
-    }];
+    [_manager addNewTaskList:taskList];
+//    GTLQueryTasks *query = [GTLQueryTasks queryForTasklistsInsertWithObject:taskList];
+//    
+//    _tasksTicket = [self.tasksService executeQuery:query completionHandler:^(GTLServiceTicket *ticket, id item, NSError *error) {
+//        _tasksTicket = nil;
+//        
+//        if (error == nil) {
+//            [self fetchTaskLists];
+//        } else {
+//            NSLog(@"Error: %@", error);
+//        }
+//    }];
 }
 
 - (void)renameTaskList:(GTLTasksTaskList *)taskList {
@@ -359,13 +358,29 @@ static NSString * const kTaskListCellReuseIdentifier = @"TaskListCellReuseIdenti
     }];
 }
 
-#pragma mark - MDTaskManagerDelegate Protocol Methods
+#pragma mark - MDManagerDelegate Protocol Methods
 
-- (void)managerWillChangeContent:(MDTasksManager *)manager {
+- (void)managerDidRefresh:(MDManager *)manager {
+    [self.tableView reloadData];
+}
+
+- (void)manager:(MDManager *)manager didAddItem:(id)item atIndexPath:(NSIndexPath *)indexPath {
+    [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationTop];
+}
+
+- (void)manager:(MDManager *)manager didUpdateItem:(id)item atIndexPath:(NSIndexPath *)indexPath {
+    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+}
+
+- (void)manager:(MDManager *)manager didDeleteItem:(id)item atIndexPath:(NSIndexPath *)indexPath {
+    [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationTop];
+}
+
+- (void)managerWillChangeContent:(MDManager *)manager {
     
 }
 
-- (void)managerDidChangeContent:(MDTasksManager *)manager {
+- (void)managerDidChangeContent:(MDManager *)manager {
     [self.tableView reloadData];
 }
 

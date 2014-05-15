@@ -10,13 +10,14 @@
 
 @interface MDTasksManager ()
 
-@property (nonatomic, strong) GTLTasksTaskLists *taskLists;
-@property (nonatomic, strong) NSMutableDictionary *taskListsDict;
+//@property (nonatomic, strong) GTLTasksTaskLists *taskLists;
+//@property (nonatomic, strong) NSMutableDictionary *taskListsDict;
+@property (nonatomic, strong) NSMutableArray *taskLists;
 @property (nonatomic, strong) GTLTasksTasks *tasks;
 @property (nonatomic, strong) GTLServiceTasks *service;
 
-- (void)syncTaskListsWithFetchedTaskLists:(GTLTasksTaskLists *)fetchedTaskLists;
-- (void)syncTaskListsWithFetchedTaskList:(GTLTasksTaskList *)fetchedTaskList;
+//- (void)syncTaskListsWithFetchedTaskLists:(GTLTasksTaskLists *)fetchedTaskLists;
+//- (void)syncTaskListsWithFetchedTaskList:(GTLTasksTaskList *)fetchedTaskList;
 
 @end
 
@@ -56,18 +57,26 @@
     self.service.authorizer = auth;
 }
 
-- (GTLTasksTaskLists *)taskLists {
+- (NSMutableArray *)taskLists {
     if (!_taskLists) {
-        _taskLists = [[GTLTasksTaskLists alloc] init];
-        _taskLists.items = [NSArray array];
+        _taskLists = [NSMutableArray array];
     }
     return _taskLists;
 }
 
+//- (GTLTasksTaskLists *)taskLists {
+//    if (!_taskLists) {
+//        _taskLists = [[GTLTasksTaskLists alloc] init];
+//        _taskLists.items = [NSArray array];
+//    }
+//    return _taskLists;
+//}
+
 #pragma mark - TableView Methods
 
 - (NSInteger)numberOfTaskLists {
-    return self.taskLists.items.count;
+    return self.taskLists.count;
+//    return self.taskLists.items.count;
 }
 - (NSInteger)numberOfTasks {
     return self.tasks.items.count;
@@ -75,37 +84,41 @@
 
 #pragma mark - Sync Methods
 
-- (void)syncTaskListsWithFetchedTaskLists:(GTLTasksTaskLists *)fetchedTaskLists {
-    for (GTLTasksTaskList *list in fetchedTaskLists) {
-        [self syncTaskListsWithFetchedTaskList:list];
-    }
-}
-
-- (void)syncTaskListsWithFetchedTaskList:(GTLTasksTaskList *)fetchedTaskList {
-//    GTLTasksTaskList *currentTaskListInDict = [self.taskListsDict objectForKey:fetchedTaskList.identifier];
-//    if (!currentTaskListInDict) {
-//        [self.taskListsDict setObject:fetchedTaskList forKey:fetchedTaskList.identifier];
-//    } else {
-//        
+//- (void)syncTaskListsWithFetchedTaskLists:(GTLTasksTaskLists *)fetchedTaskLists {
+//    for (GTLTasksTaskList *list in fetchedTaskLists) {
+//        [self syncTaskListsWithFetchedTaskList:list];
 //    }
-    
-    if (![self.taskLists.items containsObject:fetchedTaskList]) {
-        self.taskLists.items = [self.taskLists.items arrayByAddingObject:fetchedTaskList];
-    }
-}
+//}
+//
+//- (void)syncTaskListsWithFetchedTaskList:(GTLTasksTaskList *)fetchedTaskList {
+////    GTLTasksTaskList *currentTaskListInDict = [self.taskListsDict objectForKey:fetchedTaskList.identifier];
+////    if (!currentTaskListInDict) {
+////        [self.taskListsDict setObject:fetchedTaskList forKey:fetchedTaskList.identifier];
+////    } else {
+////        
+////    }
+//    
+//    if (![self.taskLists.items containsObject:fetchedTaskList]) {
+//        self.taskLists.items = [self.taskLists.items arrayByAddingObject:fetchedTaskList];
+//    }
+//}
 
 #pragma mark - Fetch Methods
 
 - (BOOL)fetchTaskLists:(NSError *)error {
     __block NSError *localError = nil;
+    [self.taskLists removeAllObjects];
+    
     GTLQueryTasks *query = [GTLQueryTasks queryForTasklistsList];
     _ticket = [self.service executeQuery:query completionHandler:^(GTLServiceTicket *ticket, id taskLists, NSError *fetchError) {
         _ticket = nil;
-        NSLog(@"Failed: %@", fetchError);
-        if ([self.delegate respondsToSelector:@selector(managerWillChangeContent:)]) {
-            [self.delegate managerWillChangeContent:self];
+        for (GTLTasksTaskList *list in (GTLTasksTaskLists *)taskLists) {
+            [self.taskLists addObject:list];
         }
-        [self syncTaskListsWithFetchedTaskLists:taskLists];
+//        if ([self.delegate respondsToSelector:@selector(managerWillChangeContent:)]) {
+//            [self.delegate managerWillChangeContent:self];
+//        }
+//        [self syncTaskListsWithFetchedTaskLists:taskLists];
         if ([self.delegate respondsToSelector:@selector(managerDidChangeContent:)]) {
             [self.delegate managerDidChangeContent:self];
         }
@@ -119,7 +132,7 @@
 
 - (BOOL)fetchTasks:(NSError *)error forTaskListAtIndex:(NSUInteger)index {
     __block NSError *localError = nil;
-    GTLTasksTaskList *taskList = [self.taskLists itemAtIndex:index];
+    GTLTasksTaskList *taskList = [self.taskLists objectAtIndex:index];
     GTLQueryTasks *query = [GTLQueryTasks queryForTasksListWithTasklist:taskList.identifier];
     _ticket = [self.service executeQuery:query completionHandler:^(GTLServiceTicket *ticket, id tasks, NSError *fetchError) {
         _ticket = nil;
@@ -141,7 +154,7 @@
         _ticket = nil;
         
         if (error == nil) {
-            [self syncTaskListsWithFetchedTaskList:item];
+//            [self syncTaskListsWithFetchedTaskList:item];
         } else {
             NSLog(@"Error: %@", error);
         }
@@ -183,7 +196,7 @@
 #pragma mark - Getters
 
 - (GTLTasksTaskList *)taskListAtIndex:(NSUInteger)index {
-    return [self.taskLists itemAtIndex:index];
+    return [self.taskLists objectAtIndex:index];
 }
 
 - (GTLTasksTask *)taskAtIndex:(NSUInteger)index {
