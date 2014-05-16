@@ -25,7 +25,7 @@
     MMDrawerController *drawerController = [[MMDrawerController alloc] initWithCenterViewController:[menuViewController getTasksViewController] leftDrawerViewController:menuNavController];
     
     [drawerController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeAll];
-    [drawerController setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeAll];
+    [drawerController setCloseDrawerGestureModeMask:MMCloseDrawerGestureModePanningCenterView | MMCloseDrawerGestureModeTapCenterView];
     
     self.window.rootViewController = drawerController;
     

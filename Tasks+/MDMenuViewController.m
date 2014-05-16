@@ -8,6 +8,7 @@
 
 #import "MDMenuViewController.h"
 #import "UIViewController+MMDrawerController.h"
+#import "MDAppDelegate.h"
 
 #import "GTLTasks.h"
 #import "GTMOAuth2ViewControllerTouch.h"
@@ -36,15 +37,16 @@ static NSString * const kTaskListCellReuseIdentifier = @"TaskListCellReuseIdenti
       finishedWithAuth:(GTMOAuth2Authentication *)auth
                  error:(NSError *)error;
 - (void)presentLoginScreen;
-- (void)fetchTaskLists;
+//- (void)fetchTaskLists;
 - (void)isAuthorizedWithAuthentication:(GTMOAuth2Authentication *)auth;
 
+- (void)refresh:(id)sender;
 - (void)createNewTaskList:(id)sender;
 
 - (void)editTaskList:(GTLTasksTaskList *)taskList;
 
-- (void)addNewTaskListWithName:(NSString *)taskListName;
-- (void)deleteTaskList:(GTLTasksTaskList *)taskList;
+//- (void)addNewTaskListWithName:(NSString *)taskListName;
+//- (void)deleteTaskList:(GTLTasksTaskList *)taskList;
 
 
 @end
@@ -69,7 +71,6 @@ static NSString * const kTaskListCellReuseIdentifier = @"TaskListCellReuseIdenti
 - (MDTasksViewController *)tasksViewController {
     if (!_tasksViewController) {
         _tasksViewController = [[MDTasksViewController alloc] initWithStyle:UITableViewStylePlain];
-        [_tasksViewController setTasksService:self.tasksService];
     }
     return _tasksViewController;
 }
@@ -95,17 +96,20 @@ static NSString * const kTaskListCellReuseIdentifier = @"TaskListCellReuseIdenti
     UIBarButtonItem *createTaskListButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(createNewTaskList:)];
     self.navigationItem.leftBarButtonItem = createTaskListButton;
     
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     self.tableView.allowsSelectionDuringEditing = YES;
     
-//    NSError *error;
-//    if (![[self manager] fetchTaskLists:error]) {
-//        // Update to handle the error appropriately.
-//        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-//        exit(-1);  // Fail
-//    }
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
+    [refreshControl setAttributedTitle:[[NSAttributedString alloc] initWithString:@"Refresh List"]];
+    [self setRefreshControl:refreshControl];
+    
+    // Attributed title offset bug fix...
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.refreshControl beginRefreshing];
+        [self.refreshControl endRefreshing];
+    });
 }
 
 - (void)didReceiveMemoryWarning {
@@ -125,26 +129,33 @@ static NSString * const kTaskListCellReuseIdentifier = @"TaskListCellReuseIdenti
     return count;
 }
 
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kTaskListCellReuseIdentifier];
     
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kTaskListCellReuseIdentifier];
+//        UILabel *countLabel = [[UILabel alloc] initWithFrame:CGRectMake(280.0, 0, 20.0, cell.frame.size.height)];
+//        [countLabel setTag:78];
+//        
+//        [cell addSubview:countLabel];
     }
     
     GTLTasksTaskList *list = [_manager taskListAtIndex:indexPath.row]; //[self.taskLists itemAtIndex:indexPath.row];
     
     cell.textLabel.text = list.title;
+//    UILabel *countLabel = (UILabel *)[cell viewWithTag:78];
+//    countLabel.text = 
     
     return cell;
 }
 
+#pragma mark - Table View Delegate
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView.editing) {
-        [self editTaskList:[self.taskLists itemAtIndex:indexPath.row]];
+        [self editTaskList:[_manager taskListAtIndex:indexPath.row]];
     } else {
-        [self.tasksViewController setTaskList:[self.taskLists itemAtIndex:indexPath.row]];
+        [self.tasksViewController setTaskList:[_manager taskListAtIndex:indexPath.row]];
         [self.drawerController closeDrawerAnimated:YES completion:nil];
     }
 }
@@ -166,9 +177,53 @@ static NSString * const kTaskListCellReuseIdentifier = @"TaskListCellReuseIdenti
     }   
 }
 
+#pragma mark - Control Event Handlers
+
+- (void)refresh:(id)sender {
+    [self.refreshControl setAttributedTitle:[[NSAttributedString alloc] initWithString:@"Loading"]];
+    [self.manager fetch];
+}
+
 - (void)createNewTaskList:(id)sender {
     [self editTaskList:nil];
 }
+
+- (void)presentLoginScreen {
+    GTMOAuth2ViewControllerTouch *loginViewController = [[GTMOAuth2ViewControllerTouch alloc] initWithScope:kGTLAuthScopeTasks clientID:kClientId clientSecret:kClientSecret keychainItemName:kKeychainItemName delegate:self finishedSelector:@selector(viewController:finishedWithAuth:error:)];
+    loginViewController.title = @"Sign In";
+    UINavigationController *loginNavController = [[UINavigationController alloc] initWithRootViewController:loginViewController];
+    [[self drawerController] presentViewController:loginNavController animated:YES completion:nil];
+}
+
+- (void)viewController:(GTMOAuth2ViewControllerTouch *)viewController finishedWithAuth:(GTMOAuth2Authentication *)auth error:(NSError *)error {
+    [[self drawerController] dismissViewControllerAnimated:YES completion:^(void) {
+        if (error == nil) {
+            [self isAuthorizedWithAuthentication:auth];
+        }
+    }];
+}
+
+- (void)isAuthorizedWithAuthentication:(GTMOAuth2Authentication *)auth {
+    [self.tasksViewController setAuth:auth];
+    
+    self.isAuthorized = YES;
+    [self.manager setAuth:auth];
+    self.tasksService.authorizer = auth;
+    [self.manager fetch];
+}
+
+- (void)MDEditTaskListViewController:(MDEditTaskListViewController *)editTaskListViewController didEndWithUpdatedTaskList:(GTLTasksTaskList *)taskList {
+    if (taskList != nil) {
+        if ([_manager containsTaskList:taskList]) {
+            [_manager editTaskList:taskList];
+        } else {
+            [_manager addNewTaskList:taskList];
+        }
+    }
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - Task List Management
 
 - (void)editTaskList:(GTLTasksTaskList *)taskList {
     MDEditTaskListViewController *editTaskListViewController = [[MDEditTaskListViewController alloc] initWithStyle:UITableViewStyleGrouped taskList:taskList];
@@ -179,193 +234,23 @@ static NSString * const kTaskListCellReuseIdentifier = @"TaskListCellReuseIdenti
     [self presentViewController:addTaskListNavController animated:YES completion:nil];
 }
 
-- (GTLServiceTasks *)tasksService {
-    
-    if (!_tasksService) {
-        _tasksService = [[GTLServiceTasks alloc] init];
-        
-        // Have the service object set tickets to fetch consecutive pages
-        // of the feed so we do not need to manually fetch them
-        _tasksService.shouldFetchNextPages = YES;
-        
-        // Have the service object set tickets to retry temporary error conditions
-        // automatically
-        _tasksService.retryEnabled = YES;
-    }
-    return _tasksService;
-}
-
-- (void)fetchTaskLists {
-    GTLQueryTasks *query = [GTLQueryTasks queryForTasklistsList];
-    _tasksTicket = [[self tasksService] executeQuery:query completionHandler:^(GTLServiceTicket *ticket, id taskLists, NSError *error) {
-        self.taskLists = taskLists;
-//        self.taskListsFetchError = error;
-        self.tasksTicket = nil;
-        [[self tableView] reloadData];
-        // TODO: Change this so that it does not always load the first list
-        [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:NO scrollPosition:UITableViewScrollPositionNone];
-        [self.tasksViewController setTaskList:[self.taskLists itemAtIndex:0]];
-    }];
-}
-
-- (void)presentLoginScreen {
-    GTMOAuth2ViewControllerTouch *loginViewController = [[GTMOAuth2ViewControllerTouch alloc] initWithScope:kGTLAuthScopeTasks clientID:kClientId clientSecret:kClientSecret keychainItemName:kKeychainItemName delegate:self finishedSelector:@selector(viewController:finishedWithAuth:error:)];
-    loginViewController.title = @"Sign In";
-    UINavigationController *loginNavController = [[UINavigationController alloc] initWithRootViewController:loginViewController];
-    [[self drawerController] presentViewController:loginNavController animated:YES completion:nil];
-}
-
-- (void)viewController:(GTMOAuth2ViewControllerTouch *)viewController
-      finishedWithAuth:(GTMOAuth2Authentication *)auth
-                 error:(NSError *)error {
-    [[self drawerController] dismissViewControllerAnimated:YES completion:^(void) {
-        if (error == nil) {
-            [self isAuthorizedWithAuthentication:auth];
-        }
-    }];
-}
-
-- (void)isAuthorizedWithAuthentication:(GTMOAuth2Authentication *)auth {
-    self.isAuthorized = YES;
-    [self.manager setAuth:auth];
-    self.tasksService.authorizer = auth;
-    [self.manager fetch];
-}
-
-- (void)MDEditTaskListViewController:(MDEditTaskListViewController *)addTaskListViewController didEndWithNewTaskListName:(NSString *)taskListName {
-    [self addNewTaskListWithName:taskListName];
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)MDEditTaskListViewController:(MDEditTaskListViewController *)editTaskListViewController didEndWithUpdatedTaskList:(GTLTasksTaskList *)taskList {
-    if (taskList != nil) {
-        BOOL isFound = NO;
-        for (GTLTasksTaskList *list in self.taskLists) {
-            if ([list.identifier isEqualToString:taskList.identifier]) {
-                [self renameTaskList:taskList];
-//                if (![list.title isEqualToString:taskList.title]) {
-//                    
-//                }
-                isFound = YES;
-            }
-        }
-        if (!isFound) {
-            [self addTaskList:taskList];
-        }
-    }
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-#pragma mark - Task List Management
-
-- (void)addNewTaskListWithName:(NSString *)taskListName {
-    if (taskListName.length) {
-        GTLTasksTaskList *tasklist = [GTLTasksTaskList object];
-        tasklist.title = taskListName;
-        
-        GTLQueryTasks *query = [GTLQueryTasks queryForTasklistsInsertWithObject:tasklist];
-        
-        _tasksTicket = [self.tasksService executeQuery:query completionHandler:^(GTLServiceTicket *ticket, id item, NSError *error) {
-            _tasksTicket = nil;
-            
-            if (error == nil) {
-                [self fetchTaskLists];
-            } else {
-                NSLog(@"Error: %@", error);
-            }
-        }];
-    }
-}
-
 - (void)addTaskList:(GTLTasksTaskList *)taskList {
     [_manager addNewTaskList:taskList];
-//    GTLQueryTasks *query = [GTLQueryTasks queryForTasklistsInsertWithObject:taskList];
-//    
-//    _tasksTicket = [self.tasksService executeQuery:query completionHandler:^(GTLServiceTicket *ticket, id item, NSError *error) {
-//        _tasksTicket = nil;
-//        
-//        if (error == nil) {
-//            [self fetchTaskLists];
-//        } else {
-//            NSLog(@"Error: %@", error);
-//        }
-//    }];
 }
 
-- (void)renameTaskList:(GTLTasksTaskList *)taskList {
-    GTLQueryTasks *query = [GTLQueryTasks queryForTasklistsPatchWithObject:taskList tasklist:taskList.identifier];
-    
-    _tasksTicket = [self.tasksService executeQuery:query completionHandler:^(GTLServiceTicket *ticket, id item, NSError *error) {
-        _tasksTicket = nil;
-        
-        if (error == nil) {
-            [self fetchTaskLists];
-        } else {
-            NSLog(@"Error: %@", error);
-        }
-    }];
-}
-
-//- (void)renameSelectedTaskList {
-//    NSString *title = [taskListNameField_ stringValue];
-//    if ([title length] > 0) {
-//        // Rename the selected task list
-//        
-//        // Rather than update the object with a complete replacement, we'll make
-//        // a patch object containing just the changed title
-//        GTLTasksTaskList *patchObject = [GTLTasksTaskList object];
-//        patchObject.title = title;
-//        
-//        GTLTasksTaskList *selectedTaskList = [self selectedTaskList];
-//        
-//        GTLQueryTasks *query = [GTLQueryTasks queryForTasklistsPatchWithObject:patchObject
-//                                                                      tasklist:selectedTaskList.identifier];
-//        GTLServiceTasks *service = self.tasksService;
-//        self.editTaskListTicket = [service executeQuery:query
-//                                      completionHandler:^(GTLServiceTicket *ticket,
-//                                                          id item, NSError *error) {
-//                                          // callback
-//                                          self.editTaskListTicket = nil;
-//                                          GTLTasksTaskList *tasklist = item;
-//                                          
-//                                          if (error == nil) {
-//                                              [self displayAlert:@"Task List Updated"
-//                                                          format:@"Updated task list \"%@\"", tasklist.title];
-//                                              [self fetchTaskLists];
-//                                              [taskListNameField_ setStringValue:@""];
-//                                          } else {
-//                                              [self displayAlert:@"Error"
-//                                                          format:@"%@", error];
-//                                              [self updateUI];
-//                                          }
-//                                      }];
-//        [self updateUI];
-//    }
-//}
-
-- (void)deleteTaskList:(GTLTasksTaskList *)taskList {
-    
-    GTLQueryTasks *query = [GTLQueryTasks queryForTasklistsDeleteWithTasklist:taskList.identifier];
-    
-    _tasksTicket = [self.tasksService executeQuery:query completionHandler:^(GTLServiceTicket *ticket, id item, NSError *error) {
-        _tasksTicket = nil;
-        
-        if (error == nil) {
-            [self fetchTaskLists];
-        } else {
-            NSLog(@"Error: %@", error);
-        }
-    }];
-}
 
 #pragma mark - MDManagerDelegate Protocol Methods
 
 - (void)managerDidRefresh:(MDManager *)manager {
+    if (self.refreshControl.refreshing) {
+        [self.refreshControl endRefreshing];
+        [self.refreshControl setAttributedTitle:[[NSAttributedString alloc] initWithString:@"Refresh List"]];
+    }
     [self.tableView reloadData];
 }
 
 - (void)manager:(MDManager *)manager didAddItem:(id)item atIndexPath:(NSIndexPath *)indexPath {
-    [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationTop];
+    [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationRight];
 }
 
 - (void)manager:(MDManager *)manager didUpdateItem:(id)item atIndexPath:(NSIndexPath *)indexPath {
@@ -373,15 +258,7 @@ static NSString * const kTaskListCellReuseIdentifier = @"TaskListCellReuseIdenti
 }
 
 - (void)manager:(MDManager *)manager didDeleteItem:(id)item atIndexPath:(NSIndexPath *)indexPath {
-    [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationTop];
-}
-
-- (void)managerWillChangeContent:(MDManager *)manager {
-    
-}
-
-- (void)managerDidChangeContent:(MDManager *)manager {
-    [self.tableView reloadData];
+    [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationRight];
 }
 
 @end

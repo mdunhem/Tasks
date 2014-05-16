@@ -29,10 +29,6 @@
 
 @protocol MDManagerDelegate <NSObject>
 
-@optional
-- (void)managerWillChangeContent:(MDManager *)manager;
-- (void)managerDidChangeContent:(MDManager *)manager;
-
 @required
 - (void)managerDidRefresh:(MDManager *)manager;
 - (void)manager:(MDManager *)manager didAddItem:(id)item atIndexPath:(NSIndexPath *)indexPath;

@@ -20,6 +20,7 @@
 - (void)deleteTaskList:(GTLTasksTaskList *)taskList;
 
 - (GTLTasksTaskList *)taskListAtIndex:(NSUInteger)index;
+- (BOOL)containsTaskList:(GTLTasksTaskList *)taskList;
 
 @end
 

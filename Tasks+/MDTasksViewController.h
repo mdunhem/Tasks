@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "GTLTasks.h"
+#import "GTMOAuth2ViewControllerTouch.h"
 
 //@protocol MDTasksViewControllerDataSource;
 
@@ -15,10 +16,11 @@
 
 //@property (nonatomic, assign) id<MDTasksViewControllerDataSource> dataSource;
 @property (nonatomic, assign) GTLTasksTaskList *taskList;
-@property (nonatomic, strong) GTLServiceTasks *tasksService;
-@property (nonatomic, strong) GTLTasksTasks *tasks;
+//@property (nonatomic, strong) GTLServiceTasks *tasksService;
+//@property (nonatomic, strong) GTLTasksTasks *tasks;
 
-- (void)reloadData;
+//- (void)reloadData;
+@property (nonatomic, strong) GTMOAuth2Authentication *auth;
 
 @end
 

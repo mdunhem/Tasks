@@ -7,23 +7,23 @@
 //
 
 #import "MDTasksViewController.h"
-
-#import "MDTask.h"
+#import "MDTasksManager.h"
+#import "MDAppDelegate.h"
 
 static NSString * const kTasksCellReuseIdentifier = @"TasksCellReuseIdentifier";
 
-@interface MDTasksViewController ()
+@interface MDTasksViewController () <MDManagerDelegate>
 
 //@property (nonatomic, strong) NSArray *tasks;
+@property (nonatomic, strong) MDTasksManager *manager;
 
-- (void)fetchTasksFromTaskList;
+//- (void)fetchTasksFromTaskList;
 
 @end
 
 @implementation MDTasksViewController
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
+- (id)initWithStyle:(UITableViewStyle)style {
     self = [super initWithStyle:style];
     if (self) {
         self.title = @"Tasks";
@@ -39,7 +39,18 @@ static NSString * const kTasksCellReuseIdentifier = @"TasksCellReuseIdentifier";
     [self.navigationController.navigationBar setBarTintColor:color];
     [self.navigationController.navigationBar setTranslucent:NO];
     
-    [self reloadData];
+//    [self.manager fetch];
+    
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
+    [refreshControl setAttributedTitle:[[NSAttributedString alloc] initWithString:@"Refresh Tasks List"]];
+    [self setRefreshControl:refreshControl];
+    
+    // Attributed title offset bug fix...
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.refreshControl beginRefreshing];
+        [self.refreshControl endRefreshing];
+    });
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -48,73 +59,56 @@ static NSString * const kTasksCellReuseIdentifier = @"TasksCellReuseIdentifier";
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
-- (void)reloadData {
-    [self fetchTasksFromTaskList];
+- (void)refresh:(id)sender {
+    [self.manager fetch];
 }
 
-- (void)didReceiveMemoryWarning
-{
+- (MDTasksManager *)manager {
+    if (!_manager) {
+        _manager = [[MDTasksManager alloc] init];
+        _manager.delegate = self;
+    }
+    return _manager;
+}
+
+- (void)setAuth:(GTMOAuth2Authentication *)auth {
+    _auth = auth;
+    [self.manager setAuth:auth];
+    [self.manager fetch];
+}
+
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Task Fetching
-
-//- (GTLServiceTasks *)tasksService {
-//    
-//    if (!_tasksService) {
-//        _tasksService = [[GTLServiceTasks alloc] init];
-//        
-//        // Have the service object set tickets to fetch consecutive pages
-//        // of the feed so we do not need to manually fetch them
-//        _tasksService.shouldFetchNextPages = YES;
-//        
-//        // Have the service object set tickets to retry temporary error conditions
-//        // automatically
-//        _tasksService.retryEnabled = YES;
-//    }
-//    return _tasksService;
-//}
-
 - (void)setTaskList:(GTLTasksTaskList *)taskList {
     _taskList = taskList;
-    [self fetchTasksFromTaskList];
-}
-
-- (void)fetchTasksFromTaskList {
-    if (_taskList) {
-        GTLQueryTasks *query = [GTLQueryTasks queryForTasksListWithTasklist:_taskList.identifier];
-        [self.tasksService executeQuery:query completionHandler:^(GTLServiceTicket *ticket, id tasks, NSError *error) {
-            self.tasks = tasks;
-            [self.tableView reloadData];
-        }];
-    }
+    [self.manager setTaskList:taskList];
+    [self.manager fetch];
 }
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of sections.
     return 1;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return self.tasks.items.count;
+    return [_manager count];
 }
 
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kTasksCellReuseIdentifier];
     
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kTasksCellReuseIdentifier];
     }
     
-    GTLTasksTask *task = [self.tasks itemAtIndex:indexPath.row];
+    GTLTasksTask *task = [_manager taskAtIndex:indexPath.row];
     cell.textLabel.text = task.title;
     
     return cell;
@@ -159,5 +153,26 @@ static NSString * const kTasksCellReuseIdentifier = @"TasksCellReuseIdentifier";
 }
 */
 
+#pragma mark - MDManagerDelegate Protocol Methods
+
+- (void)managerDidRefresh:(MDManager *)manager {
+    if (self.refreshControl.refreshing) {
+        [self.refreshControl endRefreshing];
+        [self.refreshControl setAttributedTitle:[[NSAttributedString alloc] initWithString:@"Refresh List"]];
+    }
+    [self.tableView reloadData];
+}
+
+- (void)manager:(MDManager *)manager didAddItem:(id)item atIndexPath:(NSIndexPath *)indexPath {
+    [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationRight];
+}
+
+- (void)manager:(MDManager *)manager didUpdateItem:(id)item atIndexPath:(NSIndexPath *)indexPath {
+    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+}
+
+- (void)manager:(MDManager *)manager didDeleteItem:(id)item atIndexPath:(NSIndexPath *)indexPath {
+    [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationRight];
+}
 
 @end

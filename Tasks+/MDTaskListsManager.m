@@ -55,55 +55,69 @@
 
 - (void)addNewTaskList:(GTLTasksTaskList *)taskList {
     GTLQueryTasks *query = [GTLQueryTasks queryForTasklistsInsertWithObject:taskList];
-    
     self.ticket = [self.service executeQuery:query completionHandler:^(GTLServiceTicket *ticket, id item, NSError *error) {
+        // Need to clear the ticket
         self.ticket = nil;
         
-        if (error == nil) {
-            [self.taskLists addObject:item];
-            [self.delegate manager:self didAddItem:item atIndexPath:[NSIndexPath indexPathForRow:self.count - 1 inSection:0]];
-        } else {
+        if (error != nil) {
+            // TODO: Implement error handling.
             NSLog(@"Error: %@", error);
         }
     }];
+    
+    [self.taskLists addObject:taskList];
+    [self.delegate manager:self didAddItem:taskList atIndexPath:[NSIndexPath indexPathForRow:self.count - 1 inSection:0]];
 }
 
 - (void)editTaskList:(GTLTasksTaskList *)taskList {
-    GTLQueryTasks *query = [GTLQueryTasks queryForTasklistsPatchWithObject:taskList tasklist:taskList.identifier];
     NSUInteger index = [self.taskLists indexOfObject:taskList];
     
+    GTLQueryTasks *query = [GTLQueryTasks queryForTasklistsPatchWithObject:taskList tasklist:taskList.identifier];
     self.ticket = [self.service executeQuery:query completionHandler:^(GTLServiceTicket *ticket, id item, NSError *error) {
+        // Need to clear the ticket
         self.ticket = nil;
         
-        if (error == nil) {
-            [self.taskLists replaceObjectAtIndex:index withObject:item];
-            [self.delegate manager:self didUpdateItem:item atIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
-        } else {
+        if (error != nil) {
+            // TODO: Implement error handling.
             NSLog(@"Error: %@", error);
         }
     }];
+    
+    [self.taskLists replaceObjectAtIndex:index withObject:taskList];
+    [self.delegate manager:self didUpdateItem:taskList atIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
 }
 
 - (void)deleteTaskList:(GTLTasksTaskList *)taskList {
-    GTLQueryTasks *query = [GTLQueryTasks queryForTasklistsDeleteWithTasklist:taskList.identifier];
     NSUInteger index = [self.taskLists indexOfObject:taskList];
     
+    GTLQueryTasks *query = [GTLQueryTasks queryForTasklistsDeleteWithTasklist:taskList.identifier];
     self.ticket = [self.service executeQuery:query completionHandler:^(GTLServiceTicket *ticket, id item, NSError *error) {
+        // Need to clear the ticket
         self.ticket = nil;
         
-        if (error == nil) {
-            [self.taskLists removeObjectAtIndex:index];
-            [self.delegate manager:self didDeleteItem:item atIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
-        } else {
+        if (error != nil) {
+            // TODO: Implement error handling.
             NSLog(@"Error: %@", error);
         }
     }];
+    
+    [self.taskLists removeObjectAtIndex:index];
+    [self.delegate manager:self didDeleteItem:taskList atIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
 }
 
 #pragma mark - Getters
 
 - (GTLTasksTaskList *)taskListAtIndex:(NSUInteger)index {
     return [self.taskLists objectAtIndex:index];
+}
+
+- (BOOL)containsTaskList:(GTLTasksTaskList *)taskList {
+    for (GTLTasksTaskList *list in self.taskLists) {
+        if ([list.identifier isEqualToString:taskList.identifier]) {
+            return YES;
+        }
+    }
+    return NO;
 }
 
 @end

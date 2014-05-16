@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GTMOAuth2ViewControllerTouch.h"
 
 @interface MDAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+@property (nonatomic, strong) GTMOAuth2Authentication *auth;
 
 @end

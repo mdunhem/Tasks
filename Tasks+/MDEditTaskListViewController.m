@@ -102,7 +102,7 @@ static NSString *const kEditTaskListCellTextLabelText = @"List Name:";
 }
 
 - (void)cancelButtonPressed:(id)sender {
-    [self.delegate MDEditTaskListViewController:self didEndWithNewTaskListName:nil];
+    [self.delegate MDEditTaskListViewController:self didEndWithUpdatedTaskList:nil];
 }
 
 #pragma mark - UITextFieldDelegate Protocol
