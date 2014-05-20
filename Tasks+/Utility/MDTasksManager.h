@@ -24,6 +24,8 @@
 - (GTLTasksTask *)taskAtIndex:(NSUInteger)index;
 - (BOOL)containsTask:(GTLTasksTask *)task;
 
+- (NSInteger)topLevelTaskCount;
+
 @end
 
 

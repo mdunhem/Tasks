@@ -26,6 +26,8 @@ static NSString *const kEditTaskListCellTextLabelText = @"List Name:";
 
 @implementation MDEditTaskListViewController
 
+#pragma mark - Lifecycle
+
 - (instancetype)initWithStyle:(UITableViewStyle)style {
     self = [super initWithStyle:style];
     if (self) {
@@ -60,7 +62,7 @@ static NSString *const kEditTaskListCellTextLabelText = @"List Name:";
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Properties
+#pragma mark - Custom Accessors
 
 - (MDTextFieldCell *)cell {
     if (!_cell) {
@@ -83,7 +85,17 @@ static NSString *const kEditTaskListCellTextLabelText = @"List Name:";
     return _taskList;
 }
 
-#pragma mark - Table view data source
+#pragma mark - Actions
+
+- (void)saveButtonPressed:(id)sender {
+    [self.cell.textField resignFirstResponder];
+}
+
+- (void)cancelButtonPressed:(id)sender {
+    [self.delegate MDEditTaskListViewController:self didEndWithUpdatedTaskList:nil];
+}
+
+#pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
@@ -97,24 +109,14 @@ static NSString *const kEditTaskListCellTextLabelText = @"List Name:";
     return self.cell;
 }
 
-- (void)saveButtonPressed:(id)sender {
-    [self.cell.textField resignFirstResponder];
-}
-
-- (void)cancelButtonPressed:(id)sender {
-    [self.delegate MDEditTaskListViewController:self didEndWithUpdatedTaskList:nil];
-}
-
 #pragma mark - UITextFieldDelegate Protocol
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     if (textField.text.length) {
         self.taskList.title = textField.text;
         [self.delegate MDEditTaskListViewController:self didEndWithUpdatedTaskList:self.taskList];
-//        [self.delegate MDEditTaskListViewController:self didEndWithNewTaskListName:textField.text];
     } else {
         [self.delegate MDEditTaskListViewController:self didEndWithUpdatedTaskList:nil];
-//        [self.delegate MDEditTaskListViewController:self didEndWithNewTaskListName:nil];
     }
 }
 

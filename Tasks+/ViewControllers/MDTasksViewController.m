@@ -7,6 +7,7 @@
 //
 
 #import "MDTasksViewController.h"
+#import "MDTaskDetailsViewController.h"
 #import "MDTasksManager.h"
 #import "MDAppDelegate.h"
 
@@ -23,6 +24,8 @@ static NSString * const kTasksCellReuseIdentifier = @"TasksCellReuseIdentifier";
 
 @implementation MDTasksViewController
 
+#pragma mark - Lifecycle
+
 - (id)initWithStyle:(UITableViewStyle)style {
     self = [super initWithStyle:style];
     if (self) {
@@ -38,8 +41,6 @@ static NSString * const kTasksCellReuseIdentifier = @"TasksCellReuseIdentifier";
 //    UIColor *color = [UIColor colorWithRed:120/255.0f green:143/255.0f blue:141/255.0f alpha:1.0f];
     [self.navigationController.navigationBar setBarTintColor:color];
     [self.navigationController.navigationBar setTranslucent:NO];
-    
-//    [self.manager fetch];
     
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
@@ -59,9 +60,12 @@ static NSString * const kTasksCellReuseIdentifier = @"TasksCellReuseIdentifier";
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
-- (void)refresh:(id)sender {
-    [self.manager fetch];
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
+
+#pragma mark - Custom Accessors
 
 - (MDTasksManager *)manager {
     if (!_manager) {
@@ -77,18 +81,19 @@ static NSString * const kTasksCellReuseIdentifier = @"TasksCellReuseIdentifier";
     [self.manager fetch];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 - (void)setTaskList:(GTLTasksTaskList *)taskList {
     _taskList = taskList;
     [self.manager setTaskList:taskList];
     [self.manager fetch];
 }
 
-#pragma mark - Table view data source
+#pragma mark - Private
+
+- (void)refresh:(id)sender {
+    [self.manager fetch];
+}
+
+#pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of sections.
@@ -96,25 +101,35 @@ static NSString * const kTasksCellReuseIdentifier = @"TasksCellReuseIdentifier";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    // Return the number of rows in the section.
-    return [_manager count];
+    return [self.manager count];
 }
-
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kTasksCellReuseIdentifier];
     
     if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kTasksCellReuseIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:kTasksCellReuseIdentifier];
     }
     
-    GTLTasksTask *task = [_manager taskAtIndex:indexPath.row];
+    GTLTasksTask *task = [self.manager taskAtIndex:indexPath.row];
+    if (task.parent) {
+        cell.indentationLevel = 2;
+    } else {
+        cell.indentationLevel = 0;
+    }
+    
     cell.textLabel.text = task.title;
+    cell.detailTextLabel.text = task.position;
     
     return cell;
 }
 
+#pragma mark - UITableViewDelegate
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    MDTaskDetailsViewController *taskDetailsViewController = [[MDTaskDetailsViewController alloc] initWithStyle:UITableViewStyleGrouped task:[self.manager taskAtIndex:indexPath.row]];
+    [self.navigationController pushViewController:taskDetailsViewController animated:YES];
+}
 /*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -153,7 +168,7 @@ static NSString * const kTasksCellReuseIdentifier = @"TasksCellReuseIdentifier";
 }
 */
 
-#pragma mark - MDManagerDelegate Protocol Methods
+#pragma mark - MDManagerDelegate
 
 - (void)managerDidRefresh:(MDManager *)manager {
     if (self.refreshControl.refreshing) {

@@ -11,6 +11,7 @@
 @interface MDTasksManager ()
 
 @property (nonatomic, strong) NSMutableArray *tasks;
+@property (nonatomic, strong) NSMutableArray *topLevelTasks;
 
 @end
 
@@ -43,6 +44,9 @@
         if (error == nil) {
             for (GTLTasksTask *task in (GTLTasksTasks *)tasks) {
                 [self.tasks addObject:task];
+                if (!task.parent) {
+                    [self.topLevelTasks addObject:task];
+                }
             }
             [self.delegate managerDidRefresh:self];
         } else {
@@ -78,6 +82,18 @@
         }
     }
     return NO;
+}
+
+- (NSInteger)topLevelTaskCount {
+    NSInteger count = 0;
+    
+    for (GTLTasksTask *task in self.tasks) {
+        if (!task.parent) {
+            count++;
+        }
+    }
+    
+    return count;
 }
 
 @end

@@ -13,7 +13,6 @@
 
 @protocol MDEditTaskListViewControllerDelegate <NSObject>
 
-//- (void)MDEditTaskListViewController:(MDEditTaskListViewController *)editTaskListViewController didEndWithNewTaskListName:(NSString *)taskListName;
 - (void)MDEditTaskListViewController:(MDEditTaskListViewController *)editTaskListViewController didEndWithUpdatedTaskList:(GTLTasksTaskList *)taskList;
 
 @end

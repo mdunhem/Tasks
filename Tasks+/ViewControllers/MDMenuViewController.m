@@ -14,9 +14,9 @@
 #import "GTMOAuth2ViewControllerTouch.h"
 
 // Constants used for OAuth 2.0 authorization.
-static NSString *const kKeychainItemName = @"Tasks+: iOS Google Tasks";
-static NSString *const kClientId = @"815911753448-sp0tglbdk2gm5b32tob5p9421qi4orib.apps.googleusercontent.com";
-static NSString *const kClientSecret = @"5qzXC53TeoLWy3H3qoOBRFtk";
+static NSString * const kKeychainItemName = @"Tasks+: iOS Google Tasks";
+static NSString * const kClientId = @"815911753448-sp0tglbdk2gm5b32tob5p9421qi4orib.apps.googleusercontent.com";
+static NSString * const kClientSecret = @"5qzXC53TeoLWy3H3qoOBRFtk";
 
 static NSString * const kTaskListCellReuseIdentifier = @"TaskListCellReuseIdentifier";
 
@@ -28,16 +28,13 @@ static NSString * const kTaskListCellReuseIdentifier = @"TaskListCellReuseIdenti
 
 @property (nonatomic, strong) MDTaskListsManager *manager;
 
-@property (nonatomic) GTLServiceTasks *tasksService;
-@property (nonatomic) GTLTasksTaskLists *taskLists;
-@property (nonatomic) GTLTasksTasks *tasks;
-@property (nonatomic) GTLServiceTicket *tasksTicket;
+//@property (nonatomic) GTLServiceTasks *tasksService;
+//@property (nonatomic) GTLTasksTaskLists *taskLists;
+//@property (nonatomic) GTLTasksTasks *tasks;
+//@property (nonatomic) GTLServiceTicket *tasksTicket;
 
-- (void)viewController:(GTMOAuth2ViewControllerTouch *)viewController
-      finishedWithAuth:(GTMOAuth2Authentication *)auth
-                 error:(NSError *)error;
+- (void)viewController:(GTMOAuth2ViewControllerTouch *)viewController finishedWithAuth:(GTMOAuth2Authentication *)auth error:(NSError *)error;
 - (void)presentLoginScreen;
-//- (void)fetchTaskLists;
 - (void)isAuthorizedWithAuthentication:(GTMOAuth2Authentication *)auth;
 
 - (void)refresh:(id)sender;
@@ -45,38 +42,17 @@ static NSString * const kTaskListCellReuseIdentifier = @"TaskListCellReuseIdenti
 
 - (void)editTaskList:(GTLTasksTaskList *)taskList;
 
-//- (void)addNewTaskListWithName:(NSString *)taskListName;
-//- (void)deleteTaskList:(GTLTasksTaskList *)taskList;
-
-
 @end
 
 @implementation MDMenuViewController
+
+#pragma mark - Lifecycle
 
 - (id)initWithStyle:(UITableViewStyle)style {
     if (self = [super initWithStyle:style]) {
         self.title = @"Task Lists";
     }
     return self;
-}
-
-- (MDTaskListsManager *)manager {
-    if (!_manager) {
-        _manager = [[MDTaskListsManager alloc] init];
-        _manager.delegate = self;
-    }
-    return _manager;
-}
-
-- (MDTasksViewController *)tasksViewController {
-    if (!_tasksViewController) {
-        _tasksViewController = [[MDTasksViewController alloc] initWithStyle:UITableViewStylePlain];
-    }
-    return _tasksViewController;
-}
-
-- (UIViewController *)getTasksViewController {
-    return [[UINavigationController alloc] initWithRootViewController:self.tasksViewController];
 }
 
 - (void)viewDidLoad {
@@ -117,67 +93,24 @@ static NSString * const kTaskListCellReuseIdentifier = @"TaskListCellReuseIdenti
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Table view data source
+#pragma mark - Custom Accessors
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-//    return self.taskLists.items.count;
-    NSInteger count = [_manager count];
-    return count;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kTaskListCellReuseIdentifier];
-    
-    if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kTaskListCellReuseIdentifier];
-//        UILabel *countLabel = [[UILabel alloc] initWithFrame:CGRectMake(280.0, 0, 20.0, cell.frame.size.height)];
-//        [countLabel setTag:78];
-//        
-//        [cell addSubview:countLabel];
+- (MDTaskListsManager *)manager {
+    if (!_manager) {
+        _manager = [[MDTaskListsManager alloc] init];
+        _manager.delegate = self;
     }
-    
-    GTLTasksTaskList *list = [_manager taskListAtIndex:indexPath.row]; //[self.taskLists itemAtIndex:indexPath.row];
-    
-    cell.textLabel.text = list.title;
-//    UILabel *countLabel = (UILabel *)[cell viewWithTag:78];
-//    countLabel.text = 
-    
-    return cell;
+    return _manager;
 }
 
-#pragma mark - Table View Delegate
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (tableView.editing) {
-        [self editTaskList:[_manager taskListAtIndex:indexPath.row]];
-    } else {
-        [self.tasksViewController setTaskList:[_manager taskListAtIndex:indexPath.row]];
-        [self.drawerController closeDrawerAnimated:YES completion:nil];
+- (MDTasksViewController *)tasksViewController {
+    if (!_tasksViewController) {
+        _tasksViewController = [[MDTasksViewController alloc] initWithStyle:UITableViewStylePlain];
     }
+    return _tasksViewController;
 }
 
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    return YES;
-}
-
-
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [_manager deleteTaskList:[_manager taskListAtIndex:indexPath.row]];
-        [tableView setEditing:NO];
-        [self setEditing:NO];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-
-#pragma mark - Control Event Handlers
+#pragma mark - Actions
 
 - (void)refresh:(id)sender {
     [self.refreshControl setAttributedTitle:[[NSAttributedString alloc] initWithString:@"Loading"]];
@@ -187,6 +120,20 @@ static NSString * const kTaskListCellReuseIdentifier = @"TaskListCellReuseIdenti
 - (void)createNewTaskList:(id)sender {
     [self editTaskList:nil];
 }
+
+- (void)editTaskList:(GTLTasksTaskList *)taskList {
+    MDEditTaskListViewController *editTaskListViewController = [[MDEditTaskListViewController alloc] initWithStyle:UITableViewStyleGrouped taskList:taskList];
+    editTaskListViewController.delegate = self;
+    
+    UINavigationController *addTaskListNavController = [[UINavigationController alloc] initWithRootViewController:editTaskListViewController];
+    [self presentViewController:addTaskListNavController animated:YES completion:nil];
+}
+
+- (void)addTaskList:(GTLTasksTaskList *)taskList {
+    [self.manager addNewTaskList:taskList];
+}
+
+#pragma mark - OAuth2
 
 - (void)presentLoginScreen {
     GTMOAuth2ViewControllerTouch *loginViewController = [[GTMOAuth2ViewControllerTouch alloc] initWithScope:kGTLAuthScopeTasks clientID:kClientId clientSecret:kClientSecret keychainItemName:kKeychainItemName delegate:self finishedSelector:@selector(viewController:finishedWithAuth:error:)];
@@ -208,38 +155,83 @@ static NSString * const kTaskListCellReuseIdentifier = @"TaskListCellReuseIdenti
     
     self.isAuthorized = YES;
     [self.manager setAuth:auth];
-    self.tasksService.authorizer = auth;
     [self.manager fetch];
 }
 
+#pragma mark - Public
+
+- (UIViewController *)getTasksViewController {
+    return [[UINavigationController alloc] initWithRootViewController:self.tasksViewController];
+}
+
+#pragma mark - UITableViewDataSource
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return [self.manager count];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kTaskListCellReuseIdentifier];
+    
+    if (!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kTaskListCellReuseIdentifier];
+    }
+    
+    GTLTasksTaskList *list = [self.manager taskListAtIndex:indexPath.row];
+    
+    cell.textLabel.text = list.title;
+    
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    
+    return cell;
+}
+
+#pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (tableView.editing) {
+        [self editTaskList:[self.manager taskListAtIndex:indexPath.row]];
+    } else {
+        [self.tasksViewController setTaskList:[self.manager taskListAtIndex:indexPath.row]];
+        [self.drawerController closeDrawerAnimated:YES completion:nil];
+    }
+}
+
+// Override to support conditional editing of the table view.
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+
+// Override to support editing the table view.
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        [self.manager deleteTaskList:[self.manager taskListAtIndex:indexPath.row]];
+        [tableView setEditing:NO];
+        [self setEditing:NO];
+    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
+        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+    }
+}
+
+#pragma mark - MDEditTaskListViewControllerDelegate
+
 - (void)MDEditTaskListViewController:(MDEditTaskListViewController *)editTaskListViewController didEndWithUpdatedTaskList:(GTLTasksTaskList *)taskList {
     if (taskList != nil) {
-        if ([_manager containsTaskList:taskList]) {
-            [_manager editTaskList:taskList];
+        if ([self.manager containsTaskList:taskList]) {
+            [self.manager editTaskList:taskList];
         } else {
-            [_manager addNewTaskList:taskList];
+            [self.manager addNewTaskList:taskList];
         }
     }
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-#pragma mark - Task List Management
-
-- (void)editTaskList:(GTLTasksTaskList *)taskList {
-    MDEditTaskListViewController *editTaskListViewController = [[MDEditTaskListViewController alloc] initWithStyle:UITableViewStyleGrouped taskList:taskList];
-    editTaskListViewController.delegate = self;
-    
-    UINavigationController *addTaskListNavController = [[UINavigationController alloc] initWithRootViewController:editTaskListViewController];
-    
-    [self presentViewController:addTaskListNavController animated:YES completion:nil];
-}
-
-- (void)addTaskList:(GTLTasksTaskList *)taskList {
-    [_manager addNewTaskList:taskList];
-}
-
-
-#pragma mark - MDManagerDelegate Protocol Methods
+#pragma mark - MDManagerDelegate
 
 - (void)managerDidRefresh:(MDManager *)manager {
     if (self.refreshControl.refreshing) {
